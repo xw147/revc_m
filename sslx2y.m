@@ -11,7 +11,14 @@ function errors = sslx2y(X, Y, method, seed)
     % tunable hyperparameters
     conf_thres = 0.1;
     max_update = 500;
+    % sample size labelled set =  ls_size_offset + no. features
     ls_size_offset = 5; % could be zero theoretically -- but there would be numerous ill-conditioned warnings.
+
+    % for feature = binary with only 4 features
+    % a very small labelled dataset may be all 0 or 1
+    % may need to set a bigger value to avoid Rank Deficiency
+    % ls_size_offset = 46;
+
 
     % input: X, Y, method (to be expanded)
     % function: test if semi-supervised learning (ssl) is effective for predicting Y from X

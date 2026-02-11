@@ -12,7 +12,7 @@ close all;
 
 %% Configuration
 % Number of resamples for binomial test (paper recommends 1,000)
-n_resamples = 20000;
+n_resamples = 10000;
 
 % Method: 'linear' for OLS regression
 method = 'linear';
@@ -26,15 +26,22 @@ rng(42, 'twister');
 % x_var_names = {'jsm_w7', 'jsm_w8', 'jsm_w9'};
 
 
-y_var_name = 'jsm_w6';
-x_var_names = {'wfca_w7', 'wfca_w8', 'wfca_w9'};
+% y_var_name = 'jsm_w6';
+% x_var_names = {'wfca_w7', 'wfca_w8', 'wfca_w9'};
+
+% y_var_name = 'jbmsall1';
+% x_var_names = {'jbmtuea2', 'jbmtuea3', 'jbmtuea4', 'jbmtuea5'};
+
+y_var_name = 'jbmtuea1';
+x_var_names = {'jbmsall2', 'jbmsall3', 'jbmsall4', 'jbmsall5'};
 
 %% Load and prepare data
 fprintf('========================================\n');
 fprintf('Reverse Causality Test using SSL\n');
 fprintf('========================================\n\n');
 
-data = readtable('JS_WFC_4waves_wide.csv');
+data = readtable('N1000_Wide.xlsx');
+% data = readtable('JS_WFC_noMiss_wide.csv');
 
 % Extract variables
 Y = data.(y_var_name);
@@ -140,14 +147,6 @@ fprintf('3. Binomial Test Results:\n');
 fprintf('   -------------------------\n');
 fprintf('   p-value (EXCLUDING ties, standards): %.6f\n', p_value_excluding_ties);
 fprintf('   p-value (INCLUDING ties): %.6f\n\n', p_value_including_ties);
-
-fprintf('4. RMSE Statistics:\n');
-fprintf('   Average RMSE (Supervised):      %.6f (SD: %.6f)\n', ...
-    mean(all_rmse_supervised), std(all_rmse_supervised));
-fprintf('   Average RMSE (Semi-Supervised): %.6f (SD: %.6f)\n', ...
-    mean(all_rmse_ssl), std(all_rmse_ssl));
-fprintf('   Average improvement: %.2f%%\n\n', ...
-    mean((all_rmse_supervised - all_rmse_ssl) ./ all_rmse_supervised * 100));
 
 %% Interpretation
 fprintf('========================================\n');
