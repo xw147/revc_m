@@ -12,7 +12,7 @@ close all;
 
 %% Configuration
 % Number of resamples for binomial test (paper recommends 1,000)
-n_resamples = 10000;
+n_resamples = 20000;
 
 % Method: 'linear' for OLS regression
 method = 'linear';
@@ -22,26 +22,36 @@ method = 'linear';
 rng(42, 'twister');
 
 % Variable names for reporting
+
+%%%%%%%% WFC vs JSM %%%%%%%%
 % y_var_name = 'wfca_w6';
 % x_var_names = {'jsm_w7', 'jsm_w8', 'jsm_w9'};
 
-
 % y_var_name = 'jsm_w6';
 % x_var_names = {'wfca_w7', 'wfca_w8', 'wfca_w9'};
+%%%%%%%% WFC vs JSM %%%%%%%%
 
+%%%%%%%% JSF vs union %%%%%%%%
 % y_var_name = 'jbmsall1';
 % x_var_names = {'jbmtuea2', 'jbmtuea3', 'jbmtuea4', 'jbmtuea5'};
 
-y_var_name = 'jbmtuea1';
-x_var_names = {'jbmsall2', 'jbmsall3', 'jbmsall4', 'jbmsall5'};
+% y_var_name = 'jbmtuea1';
+% x_var_names = {'jbmsall2', 'jbmsall3', 'jbmsall4', 'jbmsall5'};
+%%%%%%%% JSF vs union %%%%%%%%
+
+%%%%%%%% OB %%%%%%%%
+y_var_name = 't1l1lmxsc';
+x_var_names = {'t2l1voi', 't3l1voi'};
+%%%%%%%% OB %%%%%%%%
 
 %% Load and prepare data
 fprintf('========================================\n');
 fprintf('Reverse Causality Test using SSL\n');
 fprintf('========================================\n\n');
 
-data = readtable('N1000_Wide.xlsx');
-% data = readtable('JS_WFC_noMiss_wide.csv');
+csvPath = fullfile('..','revc','data','N_1338.csv');
+data = readtable(csvPath);
+
 
 % Extract variables
 Y = data.(y_var_name);
